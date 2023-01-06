@@ -1,6 +1,6 @@
 /*
  * @Date: 2022-10-29 10:41:08
- * @LastEditTime: 2023-01-06 11:01:07
+ * @LastEditTime: 2023-01-06 15:53:53
  *
  * Copyright (c) 2023 by 北京九万智达科技有限公司, All Rights Reserved.
  */
@@ -43,14 +43,34 @@ func onBotFollowed(event subscription.BotFollowedEvent) {
 	fmt.Println(event)
 }
 
-//发送文本消息
-//token来自于云湖官网控制台
+/* 示例方法
+ * 发送文本消息
+ * token来自于云湖官网控制台
+ */
 func SendTextMessage(recvId string, recvType string, text string) {
 	openApi := openapi.NewOpenApi("token")
 	textMessage := openapi.TextMessage{
 		RecvId:   recvId,
 		RecvType: recvType,
 		Text:     text,
+	}
+	openApi.SendTextMessage(textMessage)
+}
+
+/* 示例方法
+ * 发送文本消息
+ * token来自于云湖官网控制台
+ * buttons消息结构如下：(参考代码文件：openapi/openapi_test.go)
+ * 1、[]openapi.Button{}
+ * 2、[][]openapi.Button{}
+ */
+func SendTextMessage1(recvId string, recvType string, text string, buttons interface{}) {
+	openApi := openapi.NewOpenApi("token")
+	textMessage := openapi.TextMessage{
+		RecvId:   recvId,
+		RecvType: recvType,
+		Text:     text,
+		Buttons:  buttons,
 	}
 	openApi.SendTextMessage(textMessage)
 }

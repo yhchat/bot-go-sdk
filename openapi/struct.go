@@ -1,6 +1,6 @@
 /*
  * @Date: 2022-07-25 08:14:34
- * @LastEditTime: 2023-01-05 17:30:38
+ * @LastEditTime: 2023-01-06 13:57:53
  *
  * Copyright (c) 2023 by 北京九万智达科技有限公司, All Rights Reserved.
  */
@@ -30,24 +30,26 @@ type BatchSendMessageRequest struct {
  * 单条，用于发送文本消息
  * RecvId 为接收消息的用户ID或者群ID
  * RecvType 取值group、user
+ * Buttons 取值[]Button或[][]Button
  */
 type TextMessage struct {
-	RecvId   string   `json:"recvId"`
-	RecvType string   `json:"recvType"`
-	Text     string   `json:"text"`
-	Buttons  []Button `json:"buttons"`
+	RecvId   string      `json:"recvId"`
+	RecvType string      `json:"recvType"`
+	Text     string      `json:"text"`
+	Buttons  interface{} `json:"buttons"`
 }
 
 /**
-* 批量，用于发送文本消息
-* RecvId 为接收消息的用户ID或者群ID
-* RecvType 取值group、user
+ * 批量，用于发送文本消息
+ * RecvId 为接收消息的用户ID或者群ID
+ * RecvType 取值group、user
+ * Buttons 取值[]Button或[][]Button
  */
 type BatchTextMessage struct {
-	RecvIds  []string `json:"recvIds"`
-	RecvType string   `json:"recvType"`
-	Text     string   `json:"text"`
-	Buttons  []Button `json:"buttons"`
+	RecvIds  []string    `json:"recvIds"`
+	RecvType string      `json:"recvType"`
+	Text     string      `json:"text"`
+	Buttons  interface{} `json:"buttons"`
 }
 
 /**
