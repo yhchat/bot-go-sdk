@@ -1,14 +1,15 @@
 /*
  * @Date: 2022-07-25 08:29:52
- * @LastEditTime: 2023-01-05 17:45:28
+ * @LastEditTime: 2023-01-06 11:01:15
  *
  * Copyright (c) 2023 by 北京九万智达科技有限公司, All Rights Reserved.
  */
 package openapi
 
 import (
-	"bot-go-sdk/utils"
 	"fmt"
+
+	"github.com/yhchat/bot-go-sdk/utils"
 )
 
 /**

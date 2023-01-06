@@ -1,15 +1,16 @@
 /*
  * @Date: 2022-10-29 10:41:08
- * @LastEditTime: 2023-01-06 10:06:28
+ * @LastEditTime: 2023-01-06 11:01:07
  *
  * Copyright (c) 2023 by 北京九万智达科技有限公司, All Rights Reserved.
  */
 package main
 
 import (
-	"bot-go-sdk/openapi"
-	"bot-go-sdk/subscription"
 	"fmt"
+
+	"github.com/yhchat/bot-go-sdk/openapi"
+	"github.com/yhchat/bot-go-sdk/subscription"
 )
 
 func main() {

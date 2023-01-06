@@ -1,7 +1,6 @@
 package subscription
 
 import (
-	"bot-go-sdk/utils"
 	"context"
 	"fmt"
 	"log"
@@ -10,6 +9,8 @@ import (
 	"os/signal"
 	"syscall"
 	"time"
+
+	"github.com/yhchat/bot-go-sdk/utils"
 
 	"github.com/gin-gonic/gin"
 )
