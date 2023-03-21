@@ -1,6 +1,6 @@
 /*
  * @Date: 2022-10-29 10:41:08
- * @LastEditTime: 2023-01-06 15:53:53
+ * @LastEditTime: 2023-03-21 21:16:38
  *
  * Copyright (c) 2023 by 北京九万智达科技有限公司, All Rights Reserved.
  */
@@ -47,14 +47,14 @@ func onBotFollowed(event subscription.BotFollowedEvent) {
  * 发送文本消息
  * token来自于云湖官网控制台
  */
-func SendTextMessage(recvId string, recvType string, text string) {
+func SendTextMessage(recvId string, recvType string, text string) (openapi.BasicResponse, error) {
 	openApi := openapi.NewOpenApi("token")
 	textMessage := openapi.TextMessage{
 		RecvId:   recvId,
 		RecvType: recvType,
 		Text:     text,
 	}
-	openApi.SendTextMessage(textMessage)
+	return openApi.SendTextMessage(textMessage)
 }
 
 /* 示例方法
@@ -64,7 +64,7 @@ func SendTextMessage(recvId string, recvType string, text string) {
  * 1、[]openapi.Button{}
  * 2、[][]openapi.Button{}
  */
-func SendTextMessage1(recvId string, recvType string, text string, buttons interface{}) {
+func SendTextMessage1(recvId string, recvType string, text string, buttons interface{}) (openapi.BasicResponse, error) {
 	openApi := openapi.NewOpenApi("token")
 	textMessage := openapi.TextMessage{
 		RecvId:   recvId,
@@ -72,5 +72,21 @@ func SendTextMessage1(recvId string, recvType string, text string, buttons inter
 		Text:     text,
 		Buttons:  buttons,
 	}
-	openApi.SendTextMessage(textMessage)
+	return openApi.SendTextMessage(textMessage)
+}
+
+/* 示例方法
+ * 编辑文本消息
+ * msgId字段是来着发送消息时返回的消息ID
+ */
+func EditTextMessage(msgId string, recvId string, recvType string, text string) (openapi.BasicResponse, error) {
+	openApi := openapi.NewOpenApi("token")
+	newTextMessage := openapi.EditTextMessage{
+		MsgId:    msgId,
+		RecvId:   recvId,
+		RecvType: recvType,
+		Text:     text,
+		Buttons:  nil,
+	}
+	return openApi.EditTextMessage(newTextMessage)
 }

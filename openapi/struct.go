@@ -1,6 +1,6 @@
 /*
  * @Date: 2022-07-25 08:14:34
- * @LastEditTime: 2023-01-06 13:57:53
+ * @LastEditTime: 2023-03-21 20:56:12
  *
  * Copyright (c) 2023 by 北京九万智达科技有限公司, All Rights Reserved.
  */
@@ -85,4 +85,38 @@ type Button struct {
 	ActionType int    `json:"actionType"`
 	Url        string `json:"url"`
 	Value      string `json:"value"`
+}
+
+/**
+ * 单条，用于编辑文本消息
+ * RecvId 为消息的用户ID或者群ID
+ * RecvType 取值group、user
+ */
+type EditTextMessage struct {
+	MsgId    string      `json:"msgId"`
+	RecvId   string      `json:"recvId"`
+	RecvType string      `json:"recvType"`
+	Text     string      `json:"text"`
+	Buttons  interface{} `json:"buttons"`
+}
+
+/**
+ * 单条，编辑消息结构体
+ */
+type EditMessageRequest struct {
+	MsgId       string                 `json:"msgId"`
+	RecvId      string                 `json:"recvId"`
+	RecvType    string                 `json:"recvType"`
+	ContentType string                 `json:"contentType"`
+	Content     map[string]interface{} `json:"content"`
+}
+
+/////////////////////////////////响应内容///////////////////////////////////
+/**
+ * 发送消息返回消息对象
+ */
+type BasicResponse struct {
+	Code int64       `json:"code"`
+	Msg  string      `json:"msg"`
+	Data interface{} `json:"data"`
 }
