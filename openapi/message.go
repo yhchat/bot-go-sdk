@@ -1,6 +1,6 @@
 /*
  * @Date: 2022-07-25 08:29:52
- * @LastEditTime: 2023-03-21 21:01:01
+ * @LastEditTime: 2023-03-30 12:10:08
  *
  * Copyright (c) 2023 by 北京九万智达科技有限公司, All Rights Reserved.
  */
@@ -29,7 +29,7 @@ func (o *OpenApi) SendTextMessage(message TextMessage) (BasicResponse, error) {
  */
 func (o *OpenApi) SendMarkdownMessage(message MarkdownMessage) (BasicResponse, error) {
 	contentType := "markdown"
-	content := map[string]interface{}{"text": message.Text}
+	content := map[string]interface{}{"text": message.Text, "buttons": message.Buttons}
 	return o.SendMessage(message.RecvId, message.RecvType, contentType, content)
 }
 
@@ -67,7 +67,7 @@ func (o *OpenApi) BatchSendTextMessage(message BatchTextMessage) {
  */
 func (o *OpenApi) BatchSendMarkdownMessage(message BatchMarkdownMessage) {
 	contentType := "markdown"
-	content := map[string]interface{}{"text": message.Text}
+	content := map[string]interface{}{"text": message.Text, "buttons": message.Buttons}
 	o.BatchSendMessage(message.RecvIds, message.RecvType, contentType, content)
 }
 

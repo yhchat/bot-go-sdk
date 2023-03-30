@@ -1,6 +1,6 @@
 /*
  * @Date: 2022-07-25 08:14:34
- * @LastEditTime: 2023-03-21 20:56:12
+ * @LastEditTime: 2023-03-30 12:10:17
  *
  * Copyright (c) 2023 by 北京九万智达科技有限公司, All Rights Reserved.
  */
@@ -58,9 +58,10 @@ type BatchTextMessage struct {
  * RecvType 取值group、user
  */
 type MarkdownMessage struct {
-	RecvId   string `json:"recvId"`
-	RecvType string `json:"recvType"`
-	Text     string `json:"text"`
+	RecvId   string      `json:"recvId"`
+	RecvType string      `json:"recvType"`
+	Text     string      `json:"text"`
+	Buttons  interface{} `json:"buttons"`
 }
 
 /**
@@ -69,9 +70,10 @@ type MarkdownMessage struct {
  * RecvType 取值group、user
  */
 type BatchMarkdownMessage struct {
-	RecvIds  []string `json:"recvIds"`
-	RecvType string   `json:"recvType"`
-	Text     string   `json:"text"`
+	RecvIds  []string    `json:"recvIds"`
+	RecvType string      `json:"recvType"`
+	Text     string      `json:"text"`
+	Buttons  interface{} `json:"buttons"`
 }
 
 /**

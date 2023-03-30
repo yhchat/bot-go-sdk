@@ -1,6 +1,6 @@
 /*
  * @Date: 2023-01-06 14:16:19
- * @LastEditTime: 2023-03-21 21:13:39
+ * @LastEditTime: 2023-03-30 12:10:38
  *
  * Copyright (c) 2023 by 北京九万智达科技有限公司, All Rights Reserved.
  */
@@ -35,7 +35,7 @@ func TestTextMessage1(t *testing.T) {
 	openApi.SendTextMessage(textMessage)
 }
 
-//测试横竖向二维的buttons
+//测试横竖向二维的buttons, 两横两竖
 func TestTextMessage2(t *testing.T) {
 	openApi := NewOpenApi("token")
 	buttons := [][]Button{{
@@ -70,6 +70,7 @@ func TestTextMessage2(t *testing.T) {
 	openApi.SendTextMessage(textMessage)
 }
 
+//测试编辑消息
 func TestEditMessage(t *testing.T) {
 	openApi := NewOpenApi("token")
 	textMessage := TextMessage{
@@ -87,4 +88,23 @@ func TestEditMessage(t *testing.T) {
 		Text:     "你好吗？",
 	}
 	openApi.EditTextMessage(editTextMessage)
+}
+
+//测试markdown消息带button
+func TestMarkdownMessage1(t *testing.T) {
+	openApi := NewOpenApi("token")
+	buttons := []Button{
+		{
+			Text:       "复制内容1",
+			ActionType: 2,
+			Value:      "复制内容1",
+		},
+	}
+	markdownMessage := MarkdownMessage{
+		RecvId:   "7058262",
+		RecvType: "user",
+		Text:     "# test",
+		Buttons:  buttons,
+	}
+	openApi.SendMarkdownMessage(markdownMessage)
 }
