@@ -22,6 +22,7 @@ type Subscription struct {
 	OnMessageNormal      func(MessageEvent)
 	OnMessageInstruction func(MessageEvent)
 	OnBotFollowed        func(BotFollowedEvent)
+	OnButtonReportInline func(ButtonReportInlineEvent)
 }
 
 func NewSubscription(port int) *Subscription {
@@ -199,12 +200,12 @@ func (s *Subscription) Parse(sr SubScriptionResp) {
 	 */
 	if header.EventType == "bot.followed" {
 		botFollowedEvent := BotFollowedEvent{
-			AvatarUrl: event["avatarUrl"].(string),
-			ChatId:    event["chatId"].(string),
-			ChatType:  event["chatType"].(string),
-			Nickname:  event["nickname"].(string),
+			AvatarUrl: utils.InterfaceToString(event["avatarUrl"]),
+			ChatId:    utils.InterfaceToString(event["chatId"]),
+			ChatType:  utils.InterfaceToString(event["chatType"]),
+			Nickname:  utils.InterfaceToString(event["nickname"]),
 			Time:      utils.InterfaceToInt64(event["time"]),
-			UserId:    event["userId"].(string),
+			UserId:    utils.InterfaceToString(event["userId"]),
 		}
 		if s.OnBotFollowed != nil {
 			s.OnBotFollowed(botFollowedEvent)
@@ -219,5 +220,25 @@ func (s *Subscription) Parse(sr SubScriptionResp) {
 	 */
 	if header.EventType == "bot.unfollowed" {
 		fmt.Println(event)
+	}
+
+	/**
+	 * @desc: 消息下按钮点击回调事件
+	 * event消息内容如下
+	 * map[msgId:xxx recvId:xxx recvType:bot senderId:xxx time:1.679899979517e+12 value:xxx]}
+	 */
+	if header.EventType == "button.report.inline" {
+		buttonReportInlineEvent := ButtonReportInlineEvent{
+			MsgId:    utils.InterfaceToString(event["msgId"]),
+			RecvId:   utils.InterfaceToString(event["recvId"]),
+			RecvType: utils.InterfaceToString(event["recvType"]),
+			SenderId: utils.InterfaceToString(event["senderId"]),
+			Value:    utils.InterfaceToString(event["value"]),
+			Time:     utils.InterfaceToInt64(event["time"]),
+		}
+		if s.OnButtonReportInline != nil {
+			s.OnButtonReportInline(buttonReportInlineEvent)
+		}
+		return
 	}
 }

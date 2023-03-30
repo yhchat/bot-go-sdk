@@ -41,6 +41,16 @@ type BotFollowedEvent struct {
 	UserId    string `json:"userId"`
 }
 
+//按钮事件汇报
+type ButtonReportInlineEvent struct {
+	MsgId    string `json:"msgId"`
+	RecvId   string `json:"recvId"`
+	RecvType string `json:"recvType"`
+	SenderId string `json:"senderId"`
+	Value    string `json:"value"`
+	Time     int64  `json:"time"`
+}
+
 //Message
 type MessageEvent struct {
 	Chat    MessageEventChat    `json:"chat"`
