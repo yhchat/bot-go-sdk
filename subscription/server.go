@@ -138,6 +138,7 @@ func (s *Subscription) Parse(sr SubScriptionResp) {
 				SenderId:        utils.InterfaceToString(sender["senderId"]),
 				SenderType:      utils.InterfaceToString(sender["senderType"]),
 				SenderUserLevel: utils.InterfaceToString(sender["senderUserLevel"]),
+				SenderNickname:  utils.InterfaceToString(sender["senderNickname"]),
 			},
 			Message: MessageEventMessage{
 				MsgId:           utils.InterfaceToString(message["msgId"]),
@@ -176,6 +177,7 @@ func (s *Subscription) Parse(sr SubScriptionResp) {
 				SenderId:        utils.InterfaceToString(sender["senderId"]),
 				SenderType:      utils.InterfaceToString(sender["senderType"]),
 				SenderUserLevel: utils.InterfaceToString(sender["senderUserLevel"]),
+				SenderNickname:  utils.InterfaceToString(sender["senderNickname"]),
 			},
 			Message: MessageEventMessage{
 				MsgId:           utils.InterfaceToString(message["msgId"]),

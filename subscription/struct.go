@@ -1,3 +1,9 @@
+/*
+ * @Date: 2023-01-06 10:45:46
+ * @LastEditTime: 2023-04-08 13:44:13
+ *
+ * Copyright (c) 2023 by 北京九万智达科技有限公司, All Rights Reserved.
+ */
 package subscription
 
 type SubScriptionResp struct {
@@ -75,4 +81,5 @@ type MessageEventSender struct {
 	SenderId        string `json:"senderId"`
 	SenderType      string `json:"senderType"`
 	SenderUserLevel string `json:"senderUserLevel"`
+	SenderNickname  string `json:"senderNickname"`
 }
