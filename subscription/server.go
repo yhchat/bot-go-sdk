@@ -17,6 +17,7 @@ import (
 
 type Subscription struct {
 	Port                 int
+	Router               *gin.Engine
 	OnGroupJoin          func(GroupJoinEvent)
 	OnGroupLeave         func(GroupLeaveEvent)
 	OnMessageNormal      func(MessageEvent)
@@ -31,22 +32,10 @@ func NewSubscription(port int) *Subscription {
 }
 
 func (s *Subscription) Start() {
-	router := gin.Default()
-	router.POST("/sub", func(c *gin.Context) {
-		var sr SubScriptionResp
-		if err := c.BindJSON(&sr); err != nil {
-			return
-		}
-		s.Parse(sr)
-
-	})
-
-	//测试使用
-	router.GET("/ping", func(c *gin.Context) {
-		c.JSON(200, gin.H{
-			"message": "pong",
-		})
-	})
+	router := s.Router
+	if router == nil {
+		router = s.DefaultRouter()
+	}
 
 	srv := &http.Server{
 		Addr:    fmt.Sprintf(":%d", s.Port),
@@ -80,6 +69,27 @@ func (s *Subscription) Start() {
 	}
 
 	log.Println("Server exiting")
+}
+
+//默认的路由
+func (s *Subscription) DefaultRouter() *gin.Engine {
+	router := gin.Default()
+	router.POST("/sub", func(c *gin.Context) {
+		var sr SubScriptionResp
+		if err := c.BindJSON(&sr); err != nil {
+			return
+		}
+		s.Parse(sr)
+
+	})
+
+	//测试使用
+	router.GET("/ping", func(c *gin.Context) {
+		c.JSON(200, gin.H{
+			"message": "pong",
+		})
+	})
+	return router
 }
 
 func (s *Subscription) Parse(sr SubScriptionResp) {
