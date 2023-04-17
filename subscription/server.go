@@ -22,6 +22,7 @@ type Subscription struct {
 	OnMessageNormal      func(MessageEvent)
 	OnMessageInstruction func(MessageEvent)
 	OnBotFollowed        func(BotFollowedEvent)
+	OnBotUnfollowed      func(BotUnfollowedEvent)
 	OnButtonReportInline func(ButtonReportInlineEvent)
 }
 
@@ -221,7 +222,18 @@ func (s *Subscription) Parse(sr SubScriptionResp) {
 	 * map[avatarUrl:xxxxx chatId:xxxxx chatType:bot nickname:xxxxx  time:1658835054923 userId:123456]
 	 */
 	if header.EventType == "bot.unfollowed" {
-		fmt.Println(event)
+		botUnfollowedEvent := BotUnfollowedEvent{
+			AvatarUrl: utils.InterfaceToString(event["avatarUrl"]),
+			ChatId:    utils.InterfaceToString(event["chatId"]),
+			ChatType:  utils.InterfaceToString(event["chatType"]),
+			Nickname:  utils.InterfaceToString(event["nickname"]),
+			Time:      utils.InterfaceToInt64(event["time"]),
+			UserId:    utils.InterfaceToString(event["userId"]),
+		}
+		if s.OnBotUnfollowed != nil {
+			s.OnBotUnfollowed(botUnfollowedEvent)
+		}
+		return
 	}
 
 	/**

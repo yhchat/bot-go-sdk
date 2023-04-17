@@ -1,6 +1,6 @@
 /*
  * @Date: 2023-01-06 10:45:46
- * @LastEditTime: 2023-04-08 13:44:13
+ * @LastEditTime: 2023-04-17 13:27:00
  *
  * Copyright (c) 2023 by 北京九万智达科技有限公司, All Rights Reserved.
  */
@@ -39,6 +39,16 @@ type GroupLeaveEvent struct {
 
 //BotFollowed
 type BotFollowedEvent struct {
+	AvatarUrl string `json:"avatarUrl"`
+	ChatId    string `json:"chatId"`
+	ChatType  string `json:"chatType"`
+	Nickname  string `json:"nickname"`
+	Time      int64  `json:"time"`
+	UserId    string `json:"userId"`
+}
+
+//BotUnfollowed
+type BotUnfollowedEvent struct {
 	AvatarUrl string `json:"avatarUrl"`
 	ChatId    string `json:"chatId"`
 	ChatType  string `json:"chatType"`
