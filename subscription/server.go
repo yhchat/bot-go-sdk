@@ -37,16 +37,19 @@ func (s *Subscription) Start() {
 		router = s.DefaultRouter()
 	}
 
+	addr := fmt.Sprintf("0.0.0.0:%d", s.Port)
 	srv := &http.Server{
-		Addr:    fmt.Sprintf(":%d", s.Port),
+		Addr:    addr,
 		Handler: router,
 	}
 
 	// Initializing the server in a goroutine so that
 	// it won't block the graceful shutdown handling below
 	go func() {
+		log.Printf("Web服务地址: http://%s\n", addr)
+		log.Printf("订阅消息接收地址: http://%s/sub\n", addr)
 		if err := srv.ListenAndServe(); err != nil && err != http.ErrServerClosed {
-			log.Fatalf("listen: %s\n", err)
+			log.Fatalf("服务启动失败， %s\n", err)
 		}
 	}()
 
@@ -58,7 +61,7 @@ func (s *Subscription) Start() {
 	// kill -9 is syscall.SIGKILL but can't be catch, so don't need add it
 	signal.Notify(quit, syscall.SIGINT, syscall.SIGTERM)
 	<-quit
-	log.Println("Shutting down server...")
+	log.Println("正在关闭服务，请稍等...")
 
 	// The context is used to inform the server it has 5 seconds to finish
 	// the request it is currently handling
@@ -68,11 +71,12 @@ func (s *Subscription) Start() {
 		log.Fatal("Server forced to shutdown: ", err)
 	}
 
-	log.Println("Server exiting")
+	log.Println("服务已关闭")
 }
 
-//默认的路由
+// 默认的路由
 func (s *Subscription) DefaultRouter() *gin.Engine {
+	gin.SetMode(gin.ReleaseMode)
 	router := gin.Default()
 	router.POST("/sub", func(c *gin.Context) {
 		var sr SubScriptionResp
