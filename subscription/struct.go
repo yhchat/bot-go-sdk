@@ -62,7 +62,7 @@ type ButtonReportInlineEvent struct {
 	MsgId    string `json:"msgId"`
 	RecvId   string `json:"recvId"`
 	RecvType string `json:"recvType"`
-	SenderId string `json:"senderId"`
+	UserId   string `json:"userId"`
 	Value    string `json:"value"`
 	Time     int64  `json:"time"`
 }

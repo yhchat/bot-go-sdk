@@ -262,7 +262,7 @@ func (s *Subscription) Parse(sr SubScriptionResp) {
 			MsgId:    utils.InterfaceToString(event["msgId"]),
 			RecvId:   utils.InterfaceToString(event["recvId"]),
 			RecvType: utils.InterfaceToString(event["recvType"]),
-			SenderId: utils.InterfaceToString(event["senderId"]),
+			UserId:   utils.InterfaceToString(event["userId"]),
 			Value:    utils.InterfaceToString(event["value"]),
 			Time:     utils.InterfaceToInt64(event["time"]),
 		}
