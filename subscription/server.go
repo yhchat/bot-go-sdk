@@ -201,6 +201,8 @@ func (s *Subscription) Parse(sr SubScriptionResp) {
 				Content:         content,
 				InstructionId:   utils.InterfaceToInt64(message["instructionId"]),
 				InstructionName: utils.InterfaceToString(message["instructionName"]),
+				CommandId:       utils.InterfaceToInt64(message["commandId"]),
+				CommandName:     utils.InterfaceToString(message["commandName"]),
 			},
 		}
 		if s.OnMessageInstruction != nil {

@@ -23,22 +23,22 @@ func main() {
 	subscription.Start()
 }
 
-//接收普通消息
+// 接收普通消息
 func onMessageNormal(event subscription.MessageEvent) {
 	fmt.Println(event)
 }
 
-//接收指令消息
+// 接收指令消息
 func onMessageInstruction(event subscription.MessageEvent) {
 	fmt.Println(event)
 }
 
-//接收群新成员加入事件
+// 接收群新成员加入事件
 func onGroupJoin(event subscription.GroupJoinEvent) {
 	fmt.Println(event)
 }
 
-//接收机器人被关注事件
+// 接收机器人被关注事件
 func onBotFollowed(event subscription.BotFollowedEvent) {
 	fmt.Println(event)
 }

@@ -7,7 +7,7 @@ import (
 	"github.com/go-playground/assert/v2"
 )
 
-//测试解析普通消息
+// 测试解析普通消息
 func TestParseMessageNormal(t *testing.T) {
 	jsonStr := `{
 		"version":"1.0",
@@ -37,7 +37,9 @@ func TestParseMessageNormal(t *testing.T) {
 					"text":"这里是消息text"
 				},
 				"instructionId":0,
-				"instructionName":""
+				"instructionName":"",
+				"commandId":1,
+				"commandName":"commandName"
 			}
 		}
 	}`
