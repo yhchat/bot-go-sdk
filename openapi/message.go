@@ -114,3 +114,22 @@ func (o *OpenApi) EditMessage(recvId string, recvType string, msgId string, cont
 	json.Unmarshal(resp.Body(), &basicResp)
 	return basicResp, err
 }
+
+/**
+ * @description: 机器人看板设置接口
+ * 机器人看板类型contentType取值: text、markdown、html
+ */
+func (o *OpenApi) SetBotBoard(recvId string, recvType string, contentType string, content string) (BasicResponse, error) {
+	var smr = BotBoardRequest{
+		RecvId:      recvId,
+		RecvType:    recvType,
+		Content:     content,
+		ContentType: contentType,
+	}
+	data := utils.InterfaceToJsonBytes(smr)
+	url := fmt.Sprintf("%s/bot/board?token=%s", API_BASE_URL, o.Token)
+	resp, err := utils.HttpPost(url, data)
+	var basicResp BasicResponse
+	json.Unmarshal(resp.Body(), &basicResp)
+	return basicResp, err
+}

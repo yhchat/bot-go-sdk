@@ -11,7 +11,7 @@ import (
 	"time"
 )
 
-//测试竖向一维的buttons
+// 测试竖向一维的buttons
 func TestTextMessage1(t *testing.T) {
 	openApi := NewOpenApi("token")
 	buttons := []Button{
@@ -35,7 +35,7 @@ func TestTextMessage1(t *testing.T) {
 	openApi.SendTextMessage(textMessage)
 }
 
-//测试横竖向二维的buttons, 两横两竖
+// 测试横竖向二维的buttons, 两横两竖
 func TestTextMessage2(t *testing.T) {
 	openApi := NewOpenApi("token")
 	buttons := [][]Button{{
@@ -70,7 +70,7 @@ func TestTextMessage2(t *testing.T) {
 	openApi.SendTextMessage(textMessage)
 }
 
-//测试编辑消息
+// 测试编辑消息
 func TestEditMessage(t *testing.T) {
 	openApi := NewOpenApi("token")
 	textMessage := TextMessage{
@@ -90,7 +90,7 @@ func TestEditMessage(t *testing.T) {
 	openApi.EditTextMessage(editTextMessage)
 }
 
-//测试markdown消息带button
+// 测试markdown消息带button
 func TestMarkdownMessage1(t *testing.T) {
 	openApi := NewOpenApi("token")
 	buttons := []Button{
@@ -107,4 +107,19 @@ func TestMarkdownMessage1(t *testing.T) {
 		Buttons:  buttons,
 	}
 	openApi.SendMarkdownMessage(markdownMessage)
+}
+
+// 测试机器人看板设置接口
+func TestSetBotBoard(t *testing.T) {
+	openApi := NewOpenApi("token")
+	recvId := "7058262"
+	recvType := "user"
+	content := `
+	<div  style="background-color:#eff3fc;border-radius: 10px;padding:10px; text-align:center; margin:10px"  >
+	<a href="https://www.yhchat.com" target="_blank">https://www.yhchat.com</a>
+ <h3><strong>🎉欢迎使用XXX机器人🎉</strong></h3>
+  <h2>您的机器人总使用时长：100小时</h2>
+   </div>
+	`
+	openApi.SetBotBoard(recvId, recvType, "html", content)
 }

@@ -113,6 +113,16 @@ type EditMessageRequest struct {
 	Content     map[string]interface{} `json:"content"`
 }
 
+/**
+ * 机器人看板展示结构体
+ */
+type BotBoardRequest struct {
+	RecvId      string `json:"recvId"`
+	RecvType    string `json:"recvType"`
+	ContentType string `json:"contentType"`
+	Content     string `json:"content"`
+}
+
 /////////////////////////////////响应内容///////////////////////////////////
 /**
  * 发送消息返回消息对象
