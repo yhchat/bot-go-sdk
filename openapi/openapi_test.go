@@ -123,3 +123,11 @@ func TestSetBotBoard(t *testing.T) {
 	`
 	openApi.SetBotBoard(recvId, recvType, "html", content)
 }
+
+// 测试取消机器人看板接口
+func TestDismissBotBoard(t *testing.T) {
+	openApi := NewOpenApi("token")
+	recvId := "7058262"
+	recvType := "user"
+	openApi.DismissBotBoard(recvId, recvType)
+}
