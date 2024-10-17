@@ -121,7 +121,8 @@ func TestSetBotBoard(t *testing.T) {
   <h2>您的机器人总使用时长：100小时</h2>
    </div>
 	`
-	openApi.SetBotBoard(recvId, recvType, "html", content)
+
+	openApi.SetBotBoard(recvId, recvType, "html", content, uint64(time.Now().Unix()+600))
 }
 
 // 测试取消机器人看板接口

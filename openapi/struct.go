@@ -121,6 +121,7 @@ type BotBoardRequest struct {
 	RecvType    string `json:"recvType"`
 	ContentType string `json:"contentType"`
 	Content     string `json:"content"`
+	ExpireTime  uint64 `json:"expireTime"`
 }
 
 /////////////////////////////////响应内容///////////////////////////////////
