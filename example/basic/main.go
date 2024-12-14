@@ -90,3 +90,17 @@ func EditTextMessage(msgId string, recvId string, recvType string, text string) 
 	}
 	return openApi.EditTextMessage(newTextMessage)
 }
+
+/* 示例方法
+ * 撤回消息
+ * msgId字段是来着发送消息时返回的消息ID
+ */
+func RecallMessage(msgId string, chatId string, chatType string) (openapi.BasicResponse, error) {
+	openApi := openapi.NewOpenApi("token")
+	recallMessage := openapi.RecallMessageRequest{
+		MsgId:    msgId,
+		ChatId:   chatId,
+		ChatType: chatType,
+	}
+	return openApi.RecallMessage(recallMessage)
+}

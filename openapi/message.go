@@ -87,6 +87,19 @@ func (o *OpenApi) BatchSendMessage(recvIds []string, recvType string, contentTyp
 }
 
 /**
+ * @description: 撤回消息
+ * @param {RecallMessageRequest} message
+ */
+func (o *OpenApi) RecallMessage(message RecallMessageRequest) (BasicResponse, error) {
+	data := utils.InterfaceToJsonBytes(message)
+	url := fmt.Sprintf("%s/bot/recall?token=%s", API_BASE_URL, o.Token)
+	resp, err := utils.HttpPost(url, data)
+	var basicResp BasicResponse
+	json.Unmarshal(resp.Body(), &basicResp)
+	return basicResp, err
+}
+
+/**
  * @description: 单条，编辑文本消息
  * @param {EditTextMessage} newMessage
  */

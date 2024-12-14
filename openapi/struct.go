@@ -90,6 +90,18 @@ type Button struct {
 }
 
 /**
+ * 用于撤回消息
+ * msgId 为消息ID
+ * chatId 为消息的用户ID或者群ID
+ * chatType 取值group、user
+ */
+type RecallMessageRequest struct {
+	MsgId    string `json:"msgId"`
+	ChatId   string `json:"chatId"`
+	ChatType string `json:"chatType"`
+}
+
+/**
  * 单条，用于编辑文本消息
  * RecvId 为消息的用户ID或者群ID
  * RecvType 取值group、user
