@@ -16,15 +16,16 @@ import (
 )
 
 type Subscription struct {
-	Port                 int
-	Router               *gin.Engine
-	OnGroupJoin          func(GroupJoinEvent)
-	OnGroupLeave         func(GroupLeaveEvent)
-	OnMessageNormal      func(MessageEvent)
-	OnMessageInstruction func(MessageEvent)
-	OnBotFollowed        func(BotFollowedEvent)
-	OnBotUnfollowed      func(BotUnfollowedEvent)
-	OnButtonReportInline func(ButtonReportInlineEvent)
+	Port                   int
+	Router                 *gin.Engine
+	OnGroupJoin            func(GroupJoinEvent)
+	OnGroupLeave           func(GroupLeaveEvent)
+	OnMessageNormal        func(MessageEvent)
+	OnMessageInstruction   func(MessageEvent)
+	OnBotFollowed          func(BotFollowedEvent)
+	OnBotUnfollowed        func(BotUnfollowedEvent)
+	OnButtonReportInline   func(ButtonReportInlineEvent)
+	OnBotShortcutMenuEvent func(BotShortcutMenuEvent)
 }
 
 func NewSubscription(port int) *Subscription {
@@ -268,6 +269,29 @@ func (s *Subscription) Parse(sr SubScriptionResp) {
 		}
 		if s.OnButtonReportInline != nil {
 			s.OnButtonReportInline(buttonReportInlineEvent)
+		}
+		return
+	}
+
+	/**
+	 * @desc: 机器人快捷菜单按钮点击事件
+	 * event消息内容如下
+	 * {"botId":"xxx","menuId":"xxx","menuType":1,"menuAction":1,"chatId":"xxx","chatType":"bot","senderType":"user","senderId":"xxx","sendTime":1739330973}
+	 */
+	if header.EventType == "bot.shortcut.menu" {
+		botShortcutMenuEvent := BotShortcutMenuEvent{
+			BotId:      utils.InterfaceToString(event["botId"]),
+			MenuId:     utils.InterfaceToString(event["menuId"]),
+			MenuType:   utils.InterfaceToInt64(event["menuType"]),
+			MenuAction: utils.InterfaceToInt64(event["menuAction"]),
+			ChatId:     utils.InterfaceToString(event["chatId"]),
+			ChatType:   utils.InterfaceToString(event["chatType"]),
+			SenderId:   utils.InterfaceToString(event["senderId"]),
+			SenderType: utils.InterfaceToString(event["senderType"]),
+			SendTime:   utils.InterfaceToInt64(event["sendTime"]),
+		}
+		if s.OnBotShortcutMenuEvent != nil {
+			s.OnBotShortcutMenuEvent(botShortcutMenuEvent)
 		}
 		return
 	}

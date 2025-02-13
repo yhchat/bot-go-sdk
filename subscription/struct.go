@@ -67,6 +67,19 @@ type ButtonReportInlineEvent struct {
 	Time     int64  `json:"time"`
 }
 
+// 机器人快捷菜单按钮点击事件
+type BotShortcutMenuEvent struct {
+	BotId      string `json:"botId"`
+	MenuId     string `json:"menuId"`
+	MenuType   int64  `json:"menuType"`
+	MenuAction int64  `json:"menuAction"`
+	ChatId     string `json:"chatId"`
+	ChatType   string `json:"chatType"`
+	SenderId   string `json:"senderId"`
+	SenderType string `json:"senderType"`
+	SendTime   int64  `json:"sendTime"`
+}
+
 // Message
 type MessageEvent struct {
 	Chat    MessageEventChat    `json:"chat"`
