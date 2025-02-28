@@ -112,8 +112,9 @@ func TestMarkdownMessage1(t *testing.T) {
 // 测试机器人看板设置接口
 func TestSetBotBoard(t *testing.T) {
 	openApi := NewOpenApi("token")
-	recvId := "7058262"
-	recvType := "user"
+	chatId := "7058262"
+	chatType := "user"
+	memberId := ""
 	content := `
 	<div  style="background-color:#eff3fc;border-radius: 10px;padding:10px; text-align:center; margin:10px"  >
 	<a href="https://www.yhchat.com" target="_blank">https://www.yhchat.com</a>
@@ -122,13 +123,14 @@ func TestSetBotBoard(t *testing.T) {
    </div>
 	`
 
-	openApi.SetBotBoard(recvId, recvType, "html", content, uint64(time.Now().Unix()+600))
+	openApi.SetBotBoard(chatId, chatType, memberId, "html", content, uint64(time.Now().Unix()+600))
 }
 
 // 测试取消机器人看板接口
 func TestDismissBotBoard(t *testing.T) {
 	openApi := NewOpenApi("token")
-	recvId := "7058262"
-	recvType := "user"
-	openApi.DismissBotBoard(recvId, recvType)
+	chatId := "7058262"
+	chatType := "user"
+	memberId := ""
+	openApi.DismissBotBoard(chatId, chatType, memberId)
 }

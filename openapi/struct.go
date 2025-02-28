@@ -129,8 +129,9 @@ type EditMessageRequest struct {
  * 机器人看板展示结构体
  */
 type BotBoardRequest struct {
-	RecvId      string `json:"recvId"`
-	RecvType    string `json:"recvType"`
+	MemberId    string `json:"memberId"`
+	ChatId      string `json:"chatId"`
+	ChatType    string `json:"chatType"`
 	ContentType string `json:"contentType"`
 	Content     string `json:"content"`
 	ExpireTime  uint64 `json:"expireTime"`

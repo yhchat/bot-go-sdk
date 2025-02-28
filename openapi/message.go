@@ -133,10 +133,11 @@ func (o *OpenApi) EditMessage(recvId string, recvType string, msgId string, cont
  * 机器人看板类型contentType取值: text、markdown、html
  * expireTime: 看板过期时间，11位时间戳。比如过期时间为10分钟，则expireTime为当前时间戳+600秒（time.Now().Unix() + 600）。
  */
-func (o *OpenApi) SetBotBoard(recvId string, recvType string, contentType string, content string, expireTime uint64) (BasicResponse, error) {
+func (o *OpenApi) SetBotBoard(chatId string, chatType string, memberId string, contentType string, content string, expireTime uint64) (BasicResponse, error) {
 	var smr = BotBoardRequest{
-		RecvId:      recvId,
-		RecvType:    recvType,
+		ChatId:      chatId,
+		ChatType:    chatType,
+		MemberId:    memberId,
 		Content:     content,
 		ContentType: contentType,
 		ExpireTime:  expireTime,
@@ -171,10 +172,11 @@ func (o *OpenApi) SetBotBoardAll(contentType string, content string, expireTime 
 /**
  * @description: 机器人看板取消接口
  */
-func (o *OpenApi) DismissBotBoard(recvId string, recvType string) (BasicResponse, error) {
+func (o *OpenApi) DismissBotBoard(chatId string, chatType string, memberId string) (BasicResponse, error) {
 	var smr = BotBoardRequest{
-		RecvId:   recvId,
-		RecvType: recvType,
+		ChatId:   chatId,
+		ChatType: chatType,
+		MemberId: memberId,
 	}
 	data := utils.InterfaceToJsonBytes(smr)
 	url := fmt.Sprintf("%s/bot/board-dismiss?token=%s", API_BASE_URL, o.Token)
