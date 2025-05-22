@@ -8,6 +8,7 @@ package main
 
 import (
 	"fmt"
+	"time"
 
 	"github.com/yhchat/bot-go-sdk/openapi"
 	"github.com/yhchat/bot-go-sdk/subscription"
@@ -55,6 +56,30 @@ func SendTextMessage(recvId string, recvType string, text string) (openapi.Basic
 		Text:     text,
 	}
 	return openApi.SendTextMessage(textMessage)
+}
+
+/* 示例方法
+ * 发送流式消息
+ * token来自于云湖官网控制台
+ */
+func SendStreamMessage(recvId string, recvType string) {
+
+	openApi := openapi.NewOpenApi("token")
+	writer, _ := openApi.StreamMessageWriter(recvId, recvType, "markdown")
+
+	// 发送消息数据
+	str := "## 测试流式消息"
+	for _, r := range str {
+		writer.Write([]byte(string(r)))
+		time.Sleep(50 * time.Millisecond)
+	}
+
+	// 关闭流式消息发送连接
+	writer.Close()
+
+	// 获取并打印服务端响应
+	resp, _ := writer.GetResponse()
+	fmt.Println("Server response:", string(resp))
 }
 
 /* 示例方法

@@ -6,6 +6,11 @@
  */
 package openapi
 
+import (
+	"io"
+	"net/http"
+)
+
 /**
  * 单条，发送消息结构体
  */
@@ -145,4 +150,13 @@ type BasicResponse struct {
 	Code int64       `json:"code"`
 	Msg  string      `json:"msg"`
 	Data interface{} `json:"data"`
+}
+
+// 流式消息 StreamWriter 封装结构
+type StreamWriter struct {
+	pr         *io.PipeReader
+	pw         *io.PipeWriter
+	client     *http.Client
+	req        *http.Request
+	responseCh chan []byte // 用于接收响应
 }

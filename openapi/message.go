@@ -9,6 +9,8 @@ package openapi
 import (
 	"encoding/json"
 	"fmt"
+	"io"
+	"net/http"
 
 	"github.com/yhchat/bot-go-sdk/utils"
 )
@@ -49,6 +51,66 @@ func (o *OpenApi) SendMessage(recvId string, recvType string, contentType string
 	var basicResp BasicResponse
 	json.Unmarshal(resp.Body(), &basicResp)
 	return basicResp, err
+}
+
+/**
+ * @description: 流式消息
+ */
+func (o *OpenApi) StreamMessageWriter(recvId string, recvType string, contentType string) (*StreamWriter, error) {
+	pr, pw := io.Pipe()
+	url := fmt.Sprintf("%s/bot/send-stream?token=%s&recvId=%s&recvType=%s&contentType=%s",
+		API_BASE_URL, o.Token, recvId, recvType, contentType)
+
+	req, err := http.NewRequest("POST", url, pr)
+	if err != nil {
+		return nil, err
+	}
+
+	respCh := make(chan []byte, 1)
+
+	client := &http.Client{}
+	go func() {
+		defer close(respCh)
+
+		resp, err := client.Do(req)
+		if err != nil {
+			pw.CloseWithError(err)
+			respCh <- []byte(err.Error())
+			return
+		}
+		defer resp.Body.Close()
+
+		body, _ := io.ReadAll(resp.Body)
+		respCh <- body
+	}()
+
+	return &StreamWriter{
+		pr:         pr,
+		pw:         pw,
+		client:     client,
+		req:        req,
+		responseCh: respCh,
+	}, nil
+}
+
+// GetResponse 获取服务端响应（阻塞直到收到响应或出错）
+func (w *StreamWriter) GetResponse() ([]byte, error) {
+	resp := <-w.responseCh
+	if len(resp) == 0 {
+		return nil, io.ErrUnexpectedEOF
+	}
+	return resp, nil
+}
+
+// Write 写入数据（线程安全）
+func (w *StreamWriter) Write(data []byte) error {
+	_, err := w.pw.Write(data)
+	return err
+}
+
+// Close 关闭写入器
+func (w *StreamWriter) Close() error {
+	return w.pw.Close()
 }
 
 /**
