@@ -24,6 +24,7 @@ type Subscription struct {
 	OnMessageInstruction   func(MessageEvent)
 	OnBotFollowed          func(BotFollowedEvent)
 	OnBotUnfollowed        func(BotUnfollowedEvent)
+	OnBotSetting           func(BotSettingEvent)
 	OnButtonReportInline   func(ButtonReportInlineEvent)
 	OnBotShortcutMenuEvent func(BotShortcutMenuEvent)
 }
@@ -249,6 +250,29 @@ func (s *Subscription) Parse(sr SubScriptionResp) {
 		}
 		if s.OnBotUnfollowed != nil {
 			s.OnBotUnfollowed(botUnfollowedEvent)
+		}
+		return
+	}
+
+	/**
+	* @desc: 机器人设置事件
+	* event消息内容如下
+	* {"time":1749625152675,"chatId":"xxx","chatType":"bot","groupId":"xxx","groupName":"xxx",
+	"avatarUrl":"https://xxx.png",
+	// "settingJson":"{\"yqzufm\":{\"id\":\"yqzufm\",\"type\":\"textarea\",\"label\":\"填写欢迎语\",\"value\":\"xxx\"}}"}
+	*/
+	if header.EventType == "bot.setting" {
+		botSettingEvent := BotSettingEvent{
+			ChatId:      utils.InterfaceToString(event["chatId"]),
+			ChatType:    utils.InterfaceToString(event["chatType"]),
+			GroupId:     utils.InterfaceToString(event["groupId"]),
+			GroupName:   utils.InterfaceToString(event["groupName"]),
+			AvatarUrl:   utils.InterfaceToString(event["avatarUrl"]),
+			SettingJson: utils.InterfaceToString(event["settingJson"]),
+			Time:        utils.InterfaceToInt64(event["time"]),
+		}
+		if s.OnBotSetting != nil {
+			s.OnBotSetting(botSettingEvent)
 		}
 		return
 	}

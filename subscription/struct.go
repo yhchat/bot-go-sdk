@@ -57,6 +57,17 @@ type BotUnfollowedEvent struct {
 	UserId    string `json:"userId"`
 }
 
+// 机器人设置事件
+type BotSettingEvent struct {
+	ChatId      string `json:"chatId"`
+	ChatType    string `json:"chatType"`
+	GroupId     string `json:"groupId"`
+	GroupName   string `json:"groupName"`
+	AvatarUrl   string `json:"avatarUrl"`
+	SettingJson string `json:"settingJson"`
+	Time        int64  `json:"time"`
+}
+
 // 按钮事件汇报
 type ButtonReportInlineEvent struct {
 	MsgId    string `json:"msgId"`
