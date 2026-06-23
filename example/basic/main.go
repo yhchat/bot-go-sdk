@@ -21,6 +21,7 @@ func main() {
 	subscription.OnMessageInstruction = onMessageInstruction
 	subscription.OnGroupJoin = onGroupJoin
 	subscription.OnBotFollowed = onBotFollowed
+	subscription.OnA2UIButtonReport = onA2UIButtonReport
 	subscription.Start()
 }
 
@@ -41,6 +42,11 @@ func onGroupJoin(event subscription.GroupJoinEvent) {
 
 // 接收机器人被关注事件
 func onBotFollowed(event subscription.BotFollowedEvent) {
+	fmt.Println(event)
+}
+
+// 接收A2UI按钮报告事件
+func onA2UIButtonReport(event subscription.A2UIButtonReportEvent) {
 	fmt.Println(event)
 }
 

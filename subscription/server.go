@@ -27,6 +27,7 @@ type Subscription struct {
 	OnBotSetting           func(BotSettingEvent)
 	OnButtonReportInline   func(ButtonReportInlineEvent)
 	OnBotShortcutMenuEvent func(BotShortcutMenuEvent)
+	OnA2UIButtonReport     func(A2UIButtonReportEvent)
 }
 
 func NewSubscription(port int) *Subscription {
@@ -316,6 +317,29 @@ func (s *Subscription) Parse(sr SubScriptionResp) {
 		}
 		if s.OnBotShortcutMenuEvent != nil {
 			s.OnBotShortcutMenuEvent(botShortcutMenuEvent)
+		}
+		return
+	}
+
+	/**
+	 * @desc: A2UI消息按钮事件
+	 * event消息内容如下
+	 */
+	if header.EventType == "a2ui.button.report" {
+		a2UIButtonReportEvent := A2UIButtonReportEvent{
+			Time:              utils.InterfaceToInt64(event["time"]),
+			MsgId:             utils.InterfaceToString(event["msgId"]),
+			RecvId:            utils.InterfaceToString(event["recvId"]),
+			RecvType:          utils.InterfaceToString(event["recvType"]),
+			UserId:            utils.InterfaceToString(event["userId"]),
+			UserName:          utils.InterfaceToString(event["userName"]),
+			ActionName:        utils.InterfaceToString(event["actionName"]),
+			SourceComponentId: utils.InterfaceToString(event["sourceComponentId"]),
+			FormContext:       event["formContext"].(map[string]interface{}),
+			InteractionJson:   utils.InterfaceToString(event["interactionJson"]),
+		}
+		if s.OnA2UIButtonReport != nil {
+			s.OnA2UIButtonReport(a2UIButtonReportEvent)
 		}
 		return
 	}

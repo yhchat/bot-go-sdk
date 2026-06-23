@@ -91,6 +91,20 @@ type BotShortcutMenuEvent struct {
 	SendTime   int64  `json:"sendTime"`
 }
 
+// A2UI消息按钮事件
+type A2UIButtonReportEvent struct {
+	Time              int64                  `json:"time"`
+	MsgId             string                 `json:"msgId"`
+	RecvId            string                 `json:"recvId"`
+	RecvType          string                 `json:"recvType"`
+	UserId            string                 `json:"userId"`
+	UserName          string                 `json:"userName"`
+	ActionName        string                 `json:"actionName"`
+	SourceComponentId string                 `json:"sourceComponentId"`
+	FormContext       map[string]interface{} `json:"formContext"`
+	InteractionJson   string                 `json:"interactionJson"`
+}
+
 // Message
 type MessageEvent struct {
 	Chat    MessageEventChat    `json:"chat"`
